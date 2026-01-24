@@ -269,6 +269,10 @@ button:not(.check-btn):hover {
     0% { transform: translateY(0) rotate(0deg); opacity: 1; }
     100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
 }
+#krishna-response {
+    text-shadow: 0 0 10px rgba(243, 207, 122, 0.4);
+    font-family: 'Playfair Display', serif;
+}
 
 </style>
 </head>
@@ -312,6 +316,8 @@ button:not(.check-btn):hover {
         <button onclick="go('gallery')">Gallery 📸</button>
         <button onclick="go('bucket')">Bucket List 📝</button>
         <button onclick="go('support')">When I Fell Short</button>
+<button onclick="go('krishna-ai')" style="border: 1px solid var(--gold); color: var(--gold);">Krishna Vaani ✨</button>
+
         <button onclick="go('countdown')">Special Dates ⏳</button>
         <button onclick="go('chat')">Our Private Chat 💬</button>
 
@@ -466,6 +472,29 @@ button:not(.check-btn):hover {
     <div class="buttons">
         <button onclick="go('gallery')">Back to Gallery</button>
         <button onclick="go('future')">My Promise</button>
+    </div>
+</section>
+
+<section id="krishna-ai">
+    <h2 class="temple-title">Krishna Vaani 🪈</h2>
+    <p style="text-align: center; font-style: italic;">"O Partha, why do you worry? I am always with you."</p>
+
+    <div style="background: rgba(255, 255, 255, 0.05); padding: 25px; border-radius: 20px; border: 1px solid var(--gold); max-width: 600px; margin: 0 auto; text-align: center;">
+        <p id="krishna-response" style="font-size: 1.2rem; line-height: 1.6; color: var(--gold); min-height: 100px; display: flex; align-items: center; justify-content: center;">
+            Radhe Radhe, Kamakshi. How are you feeling today?
+        </p>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px;">
+            <button onclick="askKrishna('low')" style="font-size: 0.8rem; border-color: var(--gold);">I feel low 😔</button>
+            <button onclick="askKrishna('confused')" style="font-size: 0.8rem; border-color: var(--gold);">I am confused 🤔</button>
+            <button onclick="askKrishna('anxious')" style="font-size: 0.8rem; border-color: var(--gold);">I feel anxious 😟</button>
+            <button onclick="askKrishna('happy')" style="font-size: 0.8rem; border-color: var(--gold);">I am happy! 😊</button>
+        </div>
+    </div>
+
+    <div class="buttons" style="text-align: center; margin-top: 30px;">
+        <button onclick="go('home')">Back Home</button>
+        <button onclick="go('temple')">Visit Mandir</button>
     </div>
 </section>
 
@@ -638,6 +667,138 @@ function createStars() {
 }
 // Call this inside window.onload or after the password check
 createStars();
+function askKrishna(mood) {
+    const responses = {
+        'low': [
+            "Why do you worry without cause? Whom do you fear without reason?",
+            "What is yours today, belonged to someone else yesterday, and will belong to someone else tomorrow.",
+            "Change is the law of the universe. What you think is death, is but a new life.",
+            "Set thy heart upon thy work, but never on its reward.",
+            "The soul is never born and never dies. It is unshakable and eternal.",
+            "In the dark hours, remember that I am the light within you. You are never alone.",
+            "Suffering is a sign that you are growing. Trust the process, Kamakshi.",
+            "Whenever you feel small, remember: the entire universe resides within Me.",
+            "Abandon all varieties of worry and just surrender unto Me. I shall deliver you.",
+            "There is neither this world, nor the world beyond, for one who doubts. Trust the path.",
+            "I am the heat in the sun, the sound in ether, and the ability in man.",
+            "The soul is not slain when the body is slain. Your essence is indestructible.",
+            "When you feel abandoned, know that I am closer to you than your own breath.",
+            "Let go of the past; it is a ghost. Let go of the future; it is a dream. Live in Me.",
+            "A person is made by their faith. As they believe, so they are.",
+            "The mind is restless, but it can be subdued by the constant practice of devotion.",
+            "I am the strength of the strong and the wisdom of the wise.",
+            "Out of thousands of men, one perhaps strives for perfection. You are that one to Me.",
+            "Do not be grieved by the temporary. The eternal is always with you.",
+            "I am the fragrance of the earth and the heat in fire. I am in everything you touch.",
+            "Even the most sinful, if they worship Me with undivided devotion, must be accounted righteous.",
+            "I am the same to all beings; with Me, none is favorite or foe. But those who love Me are in Me.",
+            "You are a child of the Divine. Darkness cannot touch the sun within you.",
+            "Every tear you shed is seen by Me. Every pain you feel is felt by Me.",
+            "Rise above the dejection, O Kaunteya! It does not befit a soul as bright as yours.",
+            "The light of the soul is never extinguished by the storms of life."
+        ],
+        'confused': [
+            "Man is made by his belief. As he believes, so he is. Trust your soul.",
+            "Calmness, gentleness, silence, and purity: these are the disciplines of the mind.",
+            "Better indeed is knowledge than mechanical practice. Better than knowledge is meditation.",
+            "Do your duty to the best of your ability and leave the rest to Divine Timing.",
+            "Confusion is the first step toward clarity. Stop overthinking and trust the flow.",
+            "The mind is like a turbulent wind, but it can be mastered through detachment.",
+            "A gift is pure when it is given from the heart to the right person at the right time.",
+            "When meditation is mastered, the mind is unwavering like a flame in a windless place.",
+            "You become that which you believe you can become. Choose your thoughts wisely.",
+            "Perform your obligatory duty, for action is indeed better than inaction.",
+            "One who sees inaction in action, and action in inaction, is truly wise.",
+            "Hell has three gates: lust, anger, and greed. Leave them behind to see clearly.",
+            "Knowledge is better than mere ritual. Use your wisdom to guide your heart.",
+            "The power of God is with you at all times; through mind, senses, and body.",
+            "When a man dwells on objects of sense, attachment is produced. Stay centered in Me.",
+            "Seek refuge in the attitude of detachment and you will find the truth.",
+            "Discrimination is the ability to see the Real in the midst of the unreal.",
+            "The wise do not grieve for the living or the dead. They see the thread connecting all.",
+            "Be humble, be harmless, be patient, and be upright. Clarity will follow.",
+            "The truth can be hidden for a time, but it can never be destroyed. Wait for it.",
+            "Listen to the silence. My voice is loudest when your mind is quiet.",
+            "You do not need to know the whole path. Just take the next step with Me.",
+            "Doubt is the smoke that hides the fire of truth. Blow it away with faith.",
+            "There is a higher logic than the mind's logic. It is called Grace.",
+            "Don't seek the 'why'. Seek the 'Who'—and you will find Me waiting.",
+            "The eye cannot see Me, but I am the power by which the eye sees."
+        ],
+        'anxious': [
+            "The soul is neither born, nor does it die. Why do you tremble? You are eternal.",
+            "Deliverance is for those who are always steady. Breathe and find your center.",
+            "Surrender all your worries unto Me. I shall deliver you from all fear.",
+            "Fear not what is not real. What is real can never be destroyed.",
+            "A person who is not disturbed by desires—that person alone can achieve peace.",
+            "Anxiety is the shadow of attachment. Let go of the outcome.",
+            "I am the thread on which all pearls are strung. You are safe in My hands.",
+            "Whatever happened, happened for the good. Whatever is happening, is for the good.",
+            "The calm mind is the best weapon against your challenges. Be still.",
+            "He who has no attachments can really love others, for his love is pure.",
+            "Through selfless service, you will find peace. Focus on the 'now'.",
+            "Be steady in your path and abandon all attachment to success or failure.",
+            "I am the beginning, the middle, and the end. Why fear the journey?",
+            "Winter and summer, pleasure and pain—they are fleeting. Endure them.",
+            "Thinking of Me, you shall overcome all obstacles by My grace.",
+            "The mind is its own friend and its own enemy. Be a friend to yourself today.",
+            "There is no fear for the soul that has taken shelter in the Divine.",
+            "Let not your heart be troubled. My love for you is greater than any problem.",
+            "Peace comes to those who have mastered their senses and their mind.",
+            "You are worried about what might go wrong. I am already in the future, making it right.",
+            "Trust is the bridge between where you are and where you want to be.",
+            "Nothing happens without My will. And My will for you is always love.",
+            "The storm may be loud, but the ocean's depth is silent. Be the ocean.",
+            "Your anxiety is a conversation between your ego and your fear. End it with faith.",
+            "I have carried the worlds. I can easily carry your burdens, Kamakshi.",
+            "Surrender is not giving up; it is growing up into My protection."
+        ],
+        'happy': [
+            "Always perform your duty without attachment. Action without attachment is Supreme.",
+            "The mind is subdued by practice. Keep this joy alive through gratitude.",
+            "The happiness which leads to the end of suffering is the best kind of joy.",
+            "Be a lamp unto yourself. Your joy is a reflection of the divinity within you.",
+            "When you see beauty in the world, know that it is but a spark of My splendor.",
+            "Devotion is the highest form of happiness. Let your heart dance.",
+            "True joy is found when you serve others and see Me in every living being.",
+            "Joy is the natural state of the soul. Let it flow like the Yamuna.",
+            "A heart filled with love is the holiest temple in the world.",
+            "Celebrate this moment, for this moment is your life.",
+            "He who sees Me in everything and everything in Me, I am never lost to him.",
+            "I am the splendor of the splendid. Your happiness is a gift.",
+            "Pure happiness is born of the soul's own serenity. Cherish this peace.",
+            "One who is happy within, who finds peace within, attains the Supreme.",
+            "The joy of the soul is far greater than the pleasure of the senses.",
+            "Smile, for your smile is the most beautiful flower in My garden.",
+            "When you are happy, I am happy. Your laughter is My favorite flute music.",
+            "Gratitude is the shortcut to a miracle. Be thankful and watch the world glow.",
+            "True love is the expansion of the heart. Let your joy reach everyone.",
+            "The highest state of being is to be constantly in a state of love.",
+            "Everything is a manifestation of My bliss. Look around and see Me.",
+            "You have found the key to the kingdom when you find joy in the simple things.",
+            "May your heart be as light as a peacock feather and as deep as the ocean.",
+            "Happiness is a choice that comes from trusting the Divine dance.",
+            "Radiate joy, for you are a spark of the Eternal Sun.",
+            "Your soul is made of bliss. Remember your true nature and rejoice."
+        ]
+    };
+
+    const display = document.getElementById('krishna-response');
+    const moodList = responses[mood];
+    const randomResponse = moodList[Math.floor(Math.random() * moodList.length)];
+
+    display.style.opacity = 0;
+    
+    if(typeof startPetalRain === "function") startPetalRain();
+
+    setTimeout(() => {
+        display.innerText = randomResponse;
+        display.style.opacity = 1;
+        display.style.transition = "opacity 1.2s ease-in-out";
+    }, 400);
+}
+
+
 
 </script>
 <script type="module">
@@ -749,6 +910,7 @@ createStars();
         // Auto-scroll to the bottom for new messages
         list.scrollTop = list.scrollHeight;
     });
+
 </script>
 
 
