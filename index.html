@@ -9,17 +9,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Poppins:wght@300;400&display=swap');
 
 :root {
-    /* CHANGE YOUR BACKGROUND IMAGE URL HERE */
     --bg-image: url('Bg.jpg'); 
     --overlay: rgba(0, 0, 0, 0.75);
     --accent: #ffd6e7;
-    --gold: #f3cf7a; /* New accent for the Temple */
+    --gold: #f3cf7a;
 }
 
 body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
-    /* Layering the custom image with a dark gradient for readability */
     background: linear-gradient(var(--overlay), var(--overlay)), var(--bg-image);
     background-size: cover;
     background-position: center;
@@ -51,7 +49,6 @@ h1, h2 {
 h1 { font-size: 3.5rem; margin-bottom: 10px; }
 h2 { font-size: 2.5rem; margin-bottom: 20px; color: var(--accent); }
 
-/* Temple Specific Style */
 .temple-title {
     color: var(--gold) !important;
     text-align: center;
@@ -75,6 +72,58 @@ p {
     opacity: 0.8;
     letter-spacing: 2px;
     margin-bottom: 30px;
+}
+
+/* Bucket List Styles */
+.bucket-container {
+    max-width: 800px;
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+.bucket-item {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px 25px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid rgba(255, 214, 231, 0.1);
+    transition: 0.4s;
+}
+
+.bucket-item.completed {
+    border-color: var(--gold);
+    background: rgba(243, 207, 122, 0.1);
+}
+
+.bucket-item span {
+    flex: 1;
+    margin-right: 15px;
+}
+
+.bucket-item.completed span {
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+
+.check-btn {
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 6px 15px;
+    font-size: 0.85rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.bucket-item.completed .check-btn {
+    background: var(--gold);
+    color: #000;
+    border-color: var(--gold);
 }
 
 /* Gallery Styling */
@@ -106,7 +155,6 @@ p {
     margin-bottom: 10px;
 }
 
-/* Bigger images for the Divine ones */
 .temple-card img {
     height: 350px;
 }
@@ -139,7 +187,7 @@ p {
     margin-top: 30px;
 }
 
-button {
+button:not(.check-btn) {
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.4);
     color: #eee;
@@ -152,7 +200,7 @@ button {
     backdrop-filter: blur(5px);
 }
 
-button:hover {
+button:not(.check-btn):hover {
     background: #fff;
     color: #000;
     transform: translateY(-3px);
@@ -164,7 +212,6 @@ button:hover {
     to {opacity: 1; transform: translateY(0);}
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     h1 { font-size: 2.5rem; }
     section { padding: 50px 5%; }
@@ -209,12 +256,11 @@ button:hover {
         <button onclick="go('story')">Our Story</button>
         <button onclick="go('temple')">Visit Mandir ✨</button>
         <button onclick="go('gallery')">Gallery 📸</button>
+        <button onclick="go('bucket')">Bucket List 📝</button>
         <button onclick="go('support')">When I Fell Short</button>
         <button onclick="go('countdown')">Special Dates ⏳</button>
     </div>
 </section>
-
-
 
 <section id="story">
     <h2>Our Story</h2>
@@ -254,91 +300,88 @@ button:hover {
 <section id="gallery">
     <h2>Captured Moments</h2>
     <div class="gallery-grid">
-        <div class="img-card">
-            <img src="home.jpg" alt="Home Moment">
-            <p>My Radha Raniii jiii</p>
-        </div>
-        <div class="img-card">
-            <img src="Support.jpg" alt="Support">
-            <p>My pyaariii north star</p>
-        </div>
-        <div class="img-card">
-            <img src="Panipuri.jpg" alt="Pani Puri">
-            <p>meriii paniii puriii😌😘</p>
-        </div>
-
-        <div class="img-card">
-            <img src="childhood.jpg" alt="Memory 1">
-            <p>Meriii pyaaariii chotuuu Kamakshuu ✨</p>
-        </div>
-        <div class="img-card">
-            <img src="magicalparent.jpg" alt="Memory 2">
-            <p>Magical Parentss Who Brought This Greatest Blessing on Earth pyaaareee unclee auntyyy 🌅</p>
-        </div>
-        <div class="img-card">
-            <img src="pahadan.jpg" alt="Memory 3">
-            <p>Meriii cutuu pahadann ❤️</p>
-        </div>
-        <div class="img-card">
-            <img src="luckycharm.jpg" alt="Memory 4">
-            <p>My Lady Luck🌎</p>
-        </div>
-        <div class="img-card">
-            <img src="dance.jpg" alt="Memory 5">
-            <p>Myy Dancerr Madamjiiii📸</p>
-        </div>
-        <div class="img-card">
-            <img src="jutti.jpg" alt="Memory 6">
-            <p>jutttiiiiii meriiiiii knjrrrrrrrrrr(madamjii ki favourite linee 🤣❤️)🕊️</p>
-        </div>
-        <div class="img-card">
-            <img src="art.jpg" alt="Memory 7">
-            <p>ART🌸</p>
-        </div>
-        <div class="img-card">
-            <img src="light.jpg" alt="Memory 8">
-            <p>The light of my life 🕯️</p>
-        </div>
-        <div class="img-card">
-            <img src="RadhaRaniJi.jpg" alt="Memory 9">
-            <p>To many more years... you'll be my Radha Raniii jii 🦚</p>
-        </div>
-        <div class="img-card">
-            <img src="KucchuPucchu.jpg" alt="Memory 10">
-            <p>My forever kucchuu pucchuu jii ♾️</p>
-        </div>
-        <div class="img-card">
-            <img src="fridge.jpg" alt="Future Memory">
-            <p>Fridge enthusiast✨</p>
-        </div>
-        <div class="img-card">
-            <img src="saheli.jpg" alt="Future Memory">
-            <p>Madamjiii Kii Saheliii 😏❤️</p>
-        </div>
-        <div class="img-card">
-            <img src="family.jpg" alt="Future Memory">
-            <p>Family😁....</p>
-        </div>
-        <div class="img-card">
-            <img src="aunty.jpg" alt="Future Memory">
-            <p>Madamjiii kii favouritee auntyy</p>
-        </div>
-        <div class="img-card">
-            <img src="placeholder5.jpg" alt="Future Memory">
-            <p>....</p>
-        </div>
-        <div class="img-card">
-            <img src="placeholder6.jpg" alt="Future Memory">
-            <p>.....</p>
-        </div>
+        <div class="img-card"><img src="home.jpg" alt="Home Moment"><p>My Radha Raniii jiii</p></div>
+        <div class="img-card"><img src="Support.jpg" alt="Support"><p>My pyaariii north star</p></div>
+        <div class="img-card"><img src="Panipuri.jpg" alt="Pani Puri"><p>meriii paniii puriii😌😘</p></div>
+        <div class="img-card"><img src="childhood.jpg" alt="Memory 1"><p>Meriii pyaaariii chotuuu Kamakshuu ✨</p></div>
+        <div class="img-card"><img src="magicalparent.jpg" alt="Memory 2"><p>Magical Parentss Who Brought This Greatest Blessing on Earth pyaaareee unclee auntyyy 🌅</p></div>
+        <div class="img-card"><img src="pahadan.jpg" alt="Memory 3"><p>Meriii cutuu pahadann ❤️</p></div>
+        <div class="img-card"><img src="luckycharm.jpg" alt="Memory 4"><p>My Lady Luck🌎</p></div>
+        <div class="img-card"><img src="dance.jpg" alt="Memory 5"><p>Myy Dancerr Madamjiiii📸</p></div>
+        <div class="img-card"><img src="jutti.jpg" alt="Memory 6"><p>jutttiiiiii meriiiiii knjrrrrrrrrrr(madamjii ki favourite linee 🤣❤️)🕊️</p></div>
+        <div class="img-card"><img src="art.jpg" alt="Memory 7"><p>ART🌸</p></div>
+        <div class="img-card"><img src="light.jpg" alt="Memory 8"><p>The light of my life 🕯️</p></div>
+        <div class="img-card"><img src="RadhaRaniJi.jpg" alt="Memory 9"><p>To many more years... you'll be my Radha Raniii jii 🦚</p></div>
+        <div class="img-card"><img src="KucchuPucchu.jpg" alt="Memory 10"><p>My forever kucchuu pucchuu jii ♾️</p></div>
+        <div class="img-card"><img src="fridge.jpg" alt="Fridge"><p>Fridge enthusiast✨</p></div>
+        <div class="img-card"><img src="saheli.jpg" alt="Saheli"><p>Madamjiii Kii Saheliii 😏❤️</p></div>
+        <div class="img-card"><img src="family.jpg" alt="Family"><p>Family😁....</p></div>
+        <div class="img-card"><img src="aunty.jpg" alt="Aunty"><p>Madamjiii kii favouritee auntyy</p></div>
+        <div class="img-card"><img src="placeholder5.jpg" alt="Extra 1"><p>....</p></div>
+        <div class="img-card"><img src="placeholder6.jpg" alt="Extra 2"><p>.....</p></div>
     </div>
     <div class="buttons">
         <button onclick="go('home')">Back Home</button>
-        <button onclick="go('temple')">Mandir ✨</button>
+        <button onclick="go('bucket')">Bucket List 📝</button>
         <button onclick="go('her')">About You</button>
     </div>
 </section>
 
+<section id="bucket">
+    <h2>Our Bucket List 📝</h2>
+    <p>Sath me sb experience krengee meriii cutuu jiiii</p>
+    
+    <div class="bucket-container">
+        <div class="bucket-item"><span>1. Vrindavan, Mathura and barsane ki trip, Banke Bihari jiii 🦚</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+        <div class="bucket-item"><span>2. pani puri dateeee 😋</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+        <div class="bucket-item"><span>3. anklet deal 💍</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+        <div class="bucket-item"><span>4. Passing Out Parade picture 🎓</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+        <div class="bucket-item"><span>5. Rain me baatein 🌧️</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+        <div class="bucket-item"><span>6. Chaand ji ke niche baithke baatein (terrace pe puri raat) 🌙</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+        <div class="bucket-item"><span>7. unplanned long drive 🚗</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+        <div class="bucket-item"><span>8. disney movies dekhna aapke sath 🏰</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+        <div class="bucket-item"><span>9. Halwaaaa 🥣</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+        <div class="bucket-item"><span>10. Hamesha sath me khush rehna (life’s tough but we’re togetherrrr!!!) ❤️</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+        
+        <div class="bucket-item"><span>11. foreign trip ✈️</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+        <div class="bucket-item"><span>12. sukoon (ek dusre ka safesttt placeee banna) 🫂</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+        <div class="bucket-item"><span>13. Buddhii mata mandirr bhi ekbarrr visit krna togetherr ✨</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+        <div class="bucket-item"><span>14. dream ghar 🏡</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+        <div class="bucket-item"><span>15. mandir dharshan 🙏</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+        <div class="bucket-item"><span>16. Radhakrishna se sath me baat krna 🕉️</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+        <div class="bucket-item"><span>17. Madamjiii se purani har ek galti ki maafi acche see ekdmmm 🥺</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+        <div class="bucket-item"><span>18. Ek dusre ki happiness bnna 😊</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+        <div class="bucket-item"><span>19. Special Memory Drive (Check Video Link) 📂</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+        <div class="bucket-item"><span>20. racing competition (Winner gets a wish granted) 🏎️</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+
+        <div class="bucket-item"><span>21. gift jutti to madamjii (khudse pehnaunga) 👠</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+        <div class="bucket-item"><span>22. saath mein hasne vali pic 📸</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+        <div class="bucket-item"><span>23. Madamjii se I Loveee youuu sun naa 💖</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+        <div class="bucket-item"><span>24. banglesss for madamjiii </span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+        <div class="bucket-item"><span>25. sir ji will grant one important wish of madam ji in future 🎁</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+        <div class="bucket-item"><span>26. Late night walksss 🚶‍♂️🚶‍♀️</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+        <div class="bucket-item"><span>27. Ganga aarti sath me (Rishikesh, Haridwar, Banaras) 🔥</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+        <div class="bucket-item"><span>28. madamjiii ke birthplace ki tripp 📍</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+        <div class="bucket-item"><span>29. chamakne waale beaches 🏖️</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+        <div class="bucket-item"><span>30. madamjii se bhot saari maafi mangni hai 🙏</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+
+        <div class="bucket-item"><span>31. sirr jii kii dhulaiiii 😂👊</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+        <div class="bucket-item"><span>32. rdr sath me khelnaa 🎮</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+        <div class="bucket-item"><span>33. madamjjii ko romantic banana 🌹</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+        <div class="bucket-item"><span>34. starting an NGO togetherr 🤝</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+        <div class="bucket-item"><span>35. bilkeshwar mahadev mandir saath mein jana 🔱</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+        <div class="bucket-item"><span>36. visiting Sankat Mochan mandir in banaras saath mein 🚩</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+        <div class="bucket-item"><span>37. achieving every goal of life together 🏆</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+        <div class="bucket-item"><span>38. girija devii darshann togetherrrr 🏔️</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+        <div class="bucket-item"><span>39. get lucky enough to watch swan dance together 🦢</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+        <div class="bucket-item"><span>40. penguinsssssss 🐧</span><button class="check-btn" onclick="toggleBucket(this)">Check</button></div>
+    </div>
+
+    <div class="buttons">
+        <button onclick="go('home')">Home</button>
+        <button onclick="go('support')">Next</button>
+    </div>
+</section>
 
 <section id="support">
     <h2>When I Fell Short</h2>
@@ -346,7 +389,7 @@ button:hover {
     <p>Every time I overthink. Every time I doubt myself. <span class="highlight">You stand by me like a rock.</span></p>
     <p>Just like Radha Ranii ji -- love without demand, devotion without noise, strength without condition.</p>
     <div class="buttons">
-        <button onclick="go('story')">Back</button>
+        <button onclick="go('bucket')">Back</button>
         <button onclick="go('her')">Next</button>
     </div>
 </section>
@@ -376,66 +419,15 @@ button:hover {
 <section id="countdown">
     <h2>Waiting for the Best Days</h2>
     <div class="countdown-container">
-        <div class="cd-box">
-            <h3>Your Birthday 🎂</h3>
-            <span class="cd-number" id="bday-days">--</span>
-            <p>Days to go (April 10)</p>
-        </div>
-        <div class="cd-box">
-            <h3>My Birthday 🥳</h3>
-            <span class="cd-number" id="my-bday-days">--</span>
-            <p>Days to go (March 11)</p>
-        </div>
-        <div class="cd-box">
-            <h3>Our Anniversary 💍</h3>
-            <span class="cd-number" id="anniv-days">--</span>
-            <p>Days to go (August 17)</p>
-        </div>
-        <div class="cd-box">
-            <h3>Chocolate Day 🍫</h3>
-            <span class="cd-number" id="choc-days">--</span>
-            <p>Days to go (Nov 25)</p>
-        </div>
+        <div class="cd-box"><h3>Your Birthday 🎂</h3><span class="cd-number" id="bday-days">--</span><p>Days to go (April 10)</p></div>
+        <div class="cd-box"><h3>My Birthday 🥳</h3><span class="cd-number" id="my-bday-days">--</span><p>Days to go (March 11)</p></div>
+        <div class="cd-box"><h3>Our Anniversary 💍</h3><span class="cd-number" id="anniv-days">--</span><p>Days to go (August 17)</p></div>
+        <div class="cd-box"><h3>Chocolate Day 🍫</h3><span class="cd-number" id="choc-days">--</span><p>Days to go (Nov 25)</p></div>
     </div>
-    <div class="buttons">
-        <button onclick="go('home')">Back Home</button>
-    </div>
+    <div class="buttons"><button onclick="go('home')">Back Home</button></div>
 </section>
 
 <script>
-function go(id) {
-    document.querySelectorAll("section").forEach(sec => {
-        sec.classList.remove("active");
-    });
-    document.getElementById(id).classList.add("active");
-    window.scrollTo(0, 0);
-}
-
-// Countdown Calculation Function
-function updateCountdowns() {
-    const now = new Date();
-    const currentYear = now.getFullYear();
-
-    function getDays(month, day) {
-        let target = new Date(currentYear, month - 1, day);
-        if (now > target) {
-            target = new Date(currentYear + 1, month - 1, day);
-        }
-        const diff = target - now;
-        return Math.ceil(diff / (1000 * 60 * 60 * 24));
-    }
-
-    document.getElementById('bday-days').innerText = getDays(4, 10);
-    document.getElementById('my-bday-days').innerText = getDays(3, 11);
-    document.getElementById('anniv-days').innerText = getDays(8, 17);
-    document.getElementById('choc-days').innerText = getDays(11, 25);
-}
-</script>
-
-<script>
-/**
- * Page Navigation Function
- */
 function go(id) {
     document.querySelectorAll("section").forEach(sec => {
         sec.classList.remove("active");
@@ -447,89 +439,60 @@ function go(id) {
     }
 }
 
-/**
- * Main Countdown and Live Timer Logic
- */
+function toggleBucket(btn) {
+    const parent = btn.parentElement;
+    parent.classList.toggle('completed');
+    btn.innerText = parent.classList.contains('completed') ? "Done ✓" : "Check";
+}
+
 function updateCountdowns() {
     const now = new Date();
     const currentYear = now.getFullYear();
-
-    // 1. LIVE TOGETHERNESS COUNTER (The "Tick" on the Home Screen)
-    // Adjust the time (00:00:00) if you have a specific time she said yes!
     const startDate = new Date('August 17, 2025 00:00:00');
     
     function refreshLiveCounter() {
         const currentTime = new Date();
         const diff = currentTime - startDate;
-
-        // If the date is in the future, show 0s
         if (diff < 0) return;
-
         const d = Math.floor(diff / (1000 * 60 * 60 * 24));
         const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
         const m = Math.floor((diff / 1000 / 60) % 60);
         const s = Math.floor((diff / 1000) % 60);
-
-        // Update Home Screen Elements
         if(document.getElementById('live-days')) document.getElementById('live-days').innerText = d;
         if(document.getElementById('live-hours')) document.getElementById('live-hours').innerText = h < 10 ? '0'+h : h;
         if(document.getElementById('live-mins')) document.getElementById('live-mins').innerText = m < 10 ? '0'+m : m;
         if(document.getElementById('live-secs')) document.getElementById('live-secs').innerText = s < 10 ? '0'+s : s;
     }
     
-    // Refresh every 1 second
     setInterval(refreshLiveCounter, 1000);
     refreshLiveCounter(); 
 
-    // 2. FUTURE SPECIAL DATES (The "Special Dates" Section)
     function getDaysUntil(month, day) {
         let target = new Date(currentYear, month - 1, day);
-        // If the date has already passed this year, look at next year
-        if (now > target) {
-            target = new Date(currentYear + 1, month - 1, day);
-        }
+        if (now > target) target = new Date(currentYear + 1, month - 1, day);
         const diff = target - now;
         return Math.ceil(diff / (1000 * 60 * 60 * 24));
     }
 
-    // Set values for the countdown boxes
-    const bday = document.getElementById('bday-days');
-    const myBday = document.getElementById('my-bday-days');
-    const anniv = document.getElementById('anniv-days');
-    const choc = document.getElementById('choc-days');
-
-    if(bday) bday.innerText = getDaysUntil(4, 10);      // April 10
-    if(myBday) myBday.innerText = getDaysUntil(3, 11);  // March 11
-    if(anniv) anniv.innerText = getDaysUntil(8, 17);    // August 17
-    if(choc) choc.innerText = getDaysUntil(11, 25);     // Nov 25
+    document.getElementById('bday-days').innerText = getDaysUntil(4, 10);
+    document.getElementById('my-bday-days').innerText = getDaysUntil(3, 11);
+    document.getElementById('anniv-days').innerText = getDaysUntil(8, 17);
+    document.getElementById('choc-days').innerText = getDaysUntil(11, 25);
 }
 
-/**
- * INITIALIZATION & PASSWORD PROTECTION
- */
 window.onload = function() {
-    // Hide all sections initially
-    document.querySelectorAll("section").forEach(sec => {
-        sec.style.display = "none";
-    });
-
-    // Ask for the code
+    document.querySelectorAll("section").forEach(sec => { sec.style.display = "none"; });
     let password = prompt("Enter the Secret Date (DDMM):");
-
     if (password === "1708") {
-        // Show sections and initialize
-        document.querySelectorAll("section").forEach(sec => {
-            sec.style.display = ""; 
-        });
-        updateCountdowns(); // Start the clocks
-        go('home');         // Go to home screen
+        document.querySelectorAll("section").forEach(sec => { sec.style.display = ""; });
+        updateCountdowns();
+        go('home');
     } else {
         alert("Wrong code! Access denied.");
         window.location.reload(); 
     }
 }
 </script>
-
 
 </body>
 </html>
