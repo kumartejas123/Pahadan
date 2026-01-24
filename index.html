@@ -312,6 +312,39 @@ function go(id) {
     window.scrollTo(0, 0);
 }
 </script>
+    <script>
+// This function handles the page switching
+function go(id) {
+    document.querySelectorAll("section").forEach(sec => {
+        sec.classList.remove("active");
+    });
+    document.getElementById(id).classList.add("active");
+    window.scrollTo(0, 0);
+}
+
+// This part runs as soon as the page loads
+window.onload = function() {
+    // Hide everything first for privacy
+    document.querySelectorAll("section").forEach(sec => {
+        sec.style.display = "none";
+    });
+
+    // Ask for the code
+    let password = prompt("Enter the Secret Date (DDMM):");
+
+    if (password === "1708") {
+        // If correct, show the home section
+        document.querySelectorAll("section").forEach(sec => {
+            sec.style.display = ""; // Reset display style
+        });
+        go('home'); 
+    } else {
+        alert("Wrong code! Access denied.");
+        window.location.reload(); // Refresh to try again
+    }
+}
+</script>
+
 
 </body>
 </html>
