@@ -178,6 +178,26 @@ button:hover {
     <h1>Kamakshi Meriiiii 🤍</h1>
     <p class="date">17 August 2025 -- Krishn Janmashtmi</p>
 
+    <p style="margin-bottom: 5px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent);">We've been together for</p>
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; max-width: 500px; margin: 10px 0 30px 0;">
+        <div style="background: rgba(255, 255, 255, 0.05); padding: 15px 5px; border-radius: 15px; border: 1px solid rgba(255, 214, 231, 0.2); text-align: center;">
+            <span id="live-days" style="display: block; font-size: 1.8rem; font-weight: bold; color: #fff;">00</span>
+            <small style="font-size: 0.7rem; opacity: 0.7;">DAYS</small>
+        </div>
+        <div style="background: rgba(255, 255, 255, 0.05); padding: 15px 5px; border-radius: 15px; border: 1px solid rgba(255, 214, 231, 0.2); text-align: center;">
+            <span id="live-hours" style="display: block; font-size: 1.8rem; font-weight: bold; color: #fff;">00</span>
+            <small style="font-size: 0.7rem; opacity: 0.7;">HRS</small>
+        </div>
+        <div style="background: rgba(255, 255, 255, 0.05); padding: 15px 5px; border-radius: 15px; border: 1px solid rgba(255, 214, 231, 0.2); text-align: center;">
+            <span id="live-mins" style="display: block; font-size: 1.8rem; font-weight: bold; color: #fff;">00</span>
+            <small style="font-size: 0.7rem; opacity: 0.7;">MINS</small>
+        </div>
+        <div style="background: rgba(255, 255, 255, 0.05); padding: 15px 5px; border-radius: 15px; border: 1px solid rgba(255, 214, 231, 0.2); text-align: center; border-bottom: 2px solid var(--accent);">
+            <span id="live-secs" style="display: block; font-size: 1.8rem; font-weight: bold; color: var(--accent);">00</span>
+            <small style="font-size: 0.7rem; opacity: 0.7;">SECS</small>
+        </div>
+    </div>
+
     <p>
         Well Krishna janmasthmi the day you finally said yes to me atleast somethng
         like that but i took it as a green signal okayyy my lovee. After months of chasing after you we finally 
@@ -193,6 +213,8 @@ button:hover {
         <button onclick="go('countdown')">Special Dates ⏳</button>
     </div>
 </section>
+
+
 
 <section id="story">
     <h2>Our Story</h2>
@@ -411,20 +433,82 @@ function updateCountdowns() {
 </script>
 
 <script>
-// This function handles the page switching
+/**
+ * Page Navigation Function
+ */
 function go(id) {
     document.querySelectorAll("section").forEach(sec => {
         sec.classList.remove("active");
     });
-    document.getElementById(id).classList.add("active");
-    window.scrollTo(0, 0);
+    const targetSection = document.getElementById(id);
+    if (targetSection) {
+        targetSection.classList.add("active");
+        window.scrollTo(0, 0);
+    }
 }
 
-// This part runs as soon as the page loads
-window.onload = function() {
-    updateCountdowns(); // Calculate the countdowns
+/**
+ * Main Countdown and Live Timer Logic
+ */
+function updateCountdowns() {
+    const now = new Date();
+    const currentYear = now.getFullYear();
+
+    // 1. LIVE TOGETHERNESS COUNTER (The "Tick" on the Home Screen)
+    // Adjust the time (00:00:00) if you have a specific time she said yes!
+    const startDate = new Date('August 17, 2025 00:00:00');
     
-    // Hide everything first for privacy
+    function refreshLiveCounter() {
+        const currentTime = new Date();
+        const diff = currentTime - startDate;
+
+        // If the date is in the future, show 0s
+        if (diff < 0) return;
+
+        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const m = Math.floor((diff / 1000 / 60) % 60);
+        const s = Math.floor((diff / 1000) % 60);
+
+        // Update Home Screen Elements
+        if(document.getElementById('live-days')) document.getElementById('live-days').innerText = d;
+        if(document.getElementById('live-hours')) document.getElementById('live-hours').innerText = h < 10 ? '0'+h : h;
+        if(document.getElementById('live-mins')) document.getElementById('live-mins').innerText = m < 10 ? '0'+m : m;
+        if(document.getElementById('live-secs')) document.getElementById('live-secs').innerText = s < 10 ? '0'+s : s;
+    }
+    
+    // Refresh every 1 second
+    setInterval(refreshLiveCounter, 1000);
+    refreshLiveCounter(); 
+
+    // 2. FUTURE SPECIAL DATES (The "Special Dates" Section)
+    function getDaysUntil(month, day) {
+        let target = new Date(currentYear, month - 1, day);
+        // If the date has already passed this year, look at next year
+        if (now > target) {
+            target = new Date(currentYear + 1, month - 1, day);
+        }
+        const diff = target - now;
+        return Math.ceil(diff / (1000 * 60 * 60 * 24));
+    }
+
+    // Set values for the countdown boxes
+    const bday = document.getElementById('bday-days');
+    const myBday = document.getElementById('my-bday-days');
+    const anniv = document.getElementById('anniv-days');
+    const choc = document.getElementById('choc-days');
+
+    if(bday) bday.innerText = getDaysUntil(4, 10);      // April 10
+    if(myBday) myBday.innerText = getDaysUntil(3, 11);  // March 11
+    if(anniv) anniv.innerText = getDaysUntil(8, 17);    // August 17
+    if(choc) choc.innerText = getDaysUntil(11, 25);     // Nov 25
+}
+
+/**
+ * INITIALIZATION & PASSWORD PROTECTION
+ */
+window.onload = function() {
+    // Hide all sections initially
     document.querySelectorAll("section").forEach(sec => {
         sec.style.display = "none";
     });
@@ -433,17 +517,19 @@ window.onload = function() {
     let password = prompt("Enter the Secret Date (DDMM):");
 
     if (password === "1708") {
-        // If correct, show the home section
+        // Show sections and initialize
         document.querySelectorAll("section").forEach(sec => {
-            sec.style.display = ""; // Reset display style
+            sec.style.display = ""; 
         });
-        go('home'); 
+        updateCountdowns(); // Start the clocks
+        go('home');         // Go to home screen
     } else {
         alert("Wrong code! Access denied.");
-        window.location.reload(); // Refresh to try again
+        window.location.reload(); 
     }
 }
 </script>
+
 
 </body>
 </html>
