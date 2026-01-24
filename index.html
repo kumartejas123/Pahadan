@@ -111,6 +111,31 @@ p {
     height: 350px;
 }
 
+/* Countdown Styles */
+.countdown-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.cd-box {
+    flex: 1;
+    min-width: 200px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 25px;
+    border-radius: 20px;
+    border: 1px solid var(--accent);
+    text-align: center;
+}
+
+.cd-number {
+    font-size: 3rem;
+    display: block;
+    color: var(--accent);
+    font-weight: bold;
+}
+
 /* Buttons */
 .buttons {
     margin-top: 30px;
@@ -167,6 +192,7 @@ button:hover {
         <button onclick="go('temple')">Visit Mandir ✨</button>
         <button onclick="go('gallery')">Gallery 📸</button>
         <button onclick="go('support')">When I Fell Short</button>
+        <button onclick="go('countdown')">Special Dates ⏳</button>
     </div>
 </section>
 
@@ -303,6 +329,25 @@ button:hover {
     </div>
 </section>
 
+<section id="countdown">
+    <h2>Waiting for the Best Days</h2>
+    <div class="countdown-container">
+        <div class="cd-box">
+            <h3>Your Birthday 🎂</h3>
+            <span class="cd-number" id="bday-days">--</span>
+            <p>Days to go (April 10)</p>
+        </div>
+        <div class="cd-box">
+            <h3>Our Anniversary 💍</h3>
+            <span class="cd-number" id="anniv-days">--</span>
+            <p>Days to go (August 17)</p>
+        </div>
+    </div>
+    <div class="buttons">
+        <button onclick="go('home')">Back Home</button>
+    </div>
+</section>
+
 <script>
 function go(id) {
     document.querySelectorAll("section").forEach(sec => {
@@ -311,8 +356,27 @@ function go(id) {
     document.getElementById(id).classList.add("active");
     window.scrollTo(0, 0);
 }
+
+// Countdown Calculation Function
+function updateCountdowns() {
+    const now = new Date();
+    const currentYear = now.getFullYear();
+
+    function getDays(month, day) {
+        let target = new Date(currentYear, month - 1, day);
+        if (now > target) {
+            target = new Date(currentYear + 1, month - 1, day);
+        }
+        const diff = target - now;
+        return Math.ceil(diff / (1000 * 60 * 60 * 24));
+    }
+
+    document.getElementById('bday-days').innerText = getDays(4, 10);
+    document.getElementById('anniv-days').innerText = getDays(8, 17);
+}
 </script>
-    <script>
+
+<script>
 // This function handles the page switching
 function go(id) {
     document.querySelectorAll("section").forEach(sec => {
@@ -324,6 +388,8 @@ function go(id) {
 
 // This part runs as soon as the page loads
 window.onload = function() {
+    updateCountdowns(); // Calculate the countdowns
+    
     // Hide everything first for privacy
     document.querySelectorAll("section").forEach(sec => {
         sec.style.display = "none";
@@ -344,7 +410,6 @@ window.onload = function() {
     }
 }
 </script>
-
 
 </body>
 </html>
