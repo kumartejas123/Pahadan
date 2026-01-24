@@ -573,6 +573,31 @@ window.onload = function() {
             const data = doc.data();
             const msgDiv = document.createElement('div');
             
+            // --- TIME FORMATTING LOGIC ---
+            let timeString = "Just now";
+            
+            // Check if createdAt exists (it might be null briefly when first sent)
+            if (data.createdAt) {
+                // Convert Firestore Timestamp to a standard JavaScript Date object
+                const dateObj = data.createdAt.toDate();
+                
+                // Format the Date (e.g., 24 Aug)
+                const datePart = dateObj.toLocaleDateString('en-GB', { 
+                    day: 'numeric', 
+                    month: 'short' 
+                });
+                
+                // Format the Time (e.g., 10:30 PM)
+                const timePart = dateObj.toLocaleTimeString('en-US', { 
+                    hour: '2-digit', 
+                    minute: '2-digit',
+                    hour12: true 
+                });
+
+                timeString = `${timePart} • ${datePart}`;
+            }
+            // -----------------------------
+
             // Styling the message bubble
             msgDiv.style.cssText = `
                 padding: 10px 15px; 
@@ -581,15 +606,26 @@ window.onload = function() {
                 color: white; 
                 align-self: flex-start; 
                 max-width: 80%;
-                margin-bottom: 5px;
+                margin-bottom: 10px;
+                position: relative;
+                min-width: 120px;
             `;
-            msgDiv.textContent = data.text;
+
+            // Insert Text AND Time
+            msgDiv.innerHTML = `
+                <span style="display: block; margin-bottom: 5px;">${data.text}</span>
+                <span style="display: block; font-size: 0.65rem; color: #f3cf7a; text-align: right; opacity: 0.9;">
+                    ${timeString}
+                </span>
+            `;
+            
             list.appendChild(msgDiv);
         });
         // Auto-scroll to the bottom for new messages
         list.scrollTop = list.scrollHeight;
     });
 </script>
+
 
 
 </body>
