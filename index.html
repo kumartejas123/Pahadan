@@ -216,6 +216,60 @@ button:not(.check-btn):hover {
     h1 { font-size: 2.5rem; }
     section { padding: 50px 5%; }
 }
+/* Temple Glow & Falling Petals */
+.temple-glow {
+    box-shadow: 0 0 60px 25px rgba(243, 207, 122, 0.9) !important;
+    border: 2px solid #fff !important;
+    transform: scale(1.02);
+    transition: all 2.5s ease-in-out; /* Smooth fade in/out */
+}
+
+.petal {
+    position: fixed;
+    top: -10%;
+    z-index: 9999;
+    user-select: none;
+    pointer-events: none;
+    animation-name: fall;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+}
+
+@keyframes fall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+}
+
+
+.star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    opacity: 0;
+    animation: twinkle var(--duration) infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0; }
+    50% { opacity: var(--opacity); }
+}
+
+.petal {
+    position: fixed;
+    top: -10%;
+    z-index: 9999;
+    user-select: none;
+    pointer-events: none;
+    animation-name: fall;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+}
+
+@keyframes fall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+}
+
 </style>
 </head>
 
@@ -283,13 +337,20 @@ button:not(.check-btn):hover {
     <p style="text-align: center; margin: 0 auto 30px;">"Jaha Prem hai, Wahi Parmeshwar hai."</p>
     
     <div class="gallery-grid">
+<div class="buttons" style="text-align: center;">
+    <button onclick="lightDiya()" style="border: 1px solid var(--gold); color: var(--gold);">🪔 Light Diya</button>
+    
+    <button onclick="go('home')">Home</button>
+    <button onclick="go('gallery')">Visit Gallery</button>
+</div>
+
         <div class="img-card temple-card">
             <img src="God.jpg" alt="Radha Rani">
-            <p style="color: var(--gold);">Radhe Radhe 🦚</p>
+            <p style="color: var(--gold);">ॐ नमो भगवते वासुदेवाय नमः</p>
         </div>
         <div class="img-card temple-card">
             <img src="Shloka.jpg" alt="Krishna Ji">
-            <p style="color: var(--gold);">Radhe Radhe 🦚</p>
+            <p style="color: var(--gold);">ॐ कृष्णाय वासुदेवाय हरये परमात्मने।प्रणतः क्लेशनाशाय गोविन्दाय नमो नमः॥</p>
         </div>
     </div>
 
@@ -514,6 +575,70 @@ window.onload = function() {
         window.location.reload(); 
     }
 }
+// Copy this part
+function createPetal() {
+    const petal = document.createElement('div');
+    const flowers = ['🌸', '🪷', '✨', '🌷', '🌺']; 
+    petal.innerHTML = flowers[Math.floor(Math.random() * flowers.length)];
+    petal.classList.add('petal');
+    petal.style.left = Math.random() * 100 + 'vw';
+    petal.style.fontSize = (Math.random() * 10 + 20) + 'px';
+    const duration = Math.random() * 3 + 5; 
+    petal.style.animationDuration = duration + 's';
+    document.body.appendChild(petal);
+    setTimeout(() => { petal.remove(); }, duration * 1000);
+}
+
+function startPetalRain() {
+    let count = 0;
+    const interval = setInterval(() => {
+        createPetal();
+        count++;
+        if (count >= 50) clearInterval(interval);
+    }, 150);
+}
+
+function lightDiya() {
+    const cards = document.querySelectorAll('.temple-card');
+    
+    // This starts the flower rain
+    startPetalRain(); 
+    
+    cards.forEach(card => {
+        card.classList.add('temple-glow');
+    });
+
+    alert("Radhe Radhe Kamakshuu! 🙏\nThey'll forever guide us.");
+    
+    setTimeout(() => {
+        cards.forEach(card => {
+            card.classList.remove('temple-glow'); 
+        });
+    }, 10000); 
+}
+
+
+function createStars() {
+    const container = document.createElement('div');
+    container.id = 'star-container';
+    document.body.appendChild(container);
+
+    for (let i = 0; i < 100; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        const size = Math.random() * 3 + 'px';
+        star.style.width = size;
+        star.style.height = size;
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+        star.style.setProperty('--opacity', Math.random());
+        container.appendChild(star);
+    }
+}
+// Call this inside window.onload or after the password check
+createStars();
+
 </script>
 <script type="module">
     // 1. Import the necessary Firebase functions
