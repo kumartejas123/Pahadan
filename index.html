@@ -507,7 +507,7 @@ button:not(.check-btn):hover {
 </section>
 
 <section id="ai-companion">
-    <h2 class="temple-title">Messenger of Love ✨</h2>
+    <h2 class="temple-title">Messenger</h2>
     <p style="text-align: center; font-style: italic; color: var(--gold); margin-bottom: 20px;">"I know your story, Kamakshuu..."</p>
 
     <div id="ai-chat-container" style="background: rgba(0, 0, 0, 0.5); border-radius: 20px; border: 1px solid var(--gold); display: flex; flex-direction: column; height: 450px; max-width: 500px; margin: 0 auto; backdrop-filter: blur(10px); overflow: hidden;">
@@ -864,7 +864,7 @@ function askKrishna(mood) {
     }, 400);
 }
 
-const GEMINI_API_KEY = "AIzaSyDyORphDFb0PW2QhiQsxYmp0eXPH6WxZlc"; 
+const GEMINI_API_KEY = "AIzaSyD-seHxP8EOM0kH_LU-G5NOjj4H-gei7G0"; 
 
 // This allows the "Enter" key to send messages
 document.addEventListener('keypress', function (e) {
@@ -880,62 +880,51 @@ async function askGemini() {
 
     if (!userText) return;
 
-    // 1. Show User Message Immediately
+    // Show User Message
     const userMsg = document.createElement('div');
-    userMsg.style = "align-self: flex-end; background: var(--gold); color: black; padding: 10px 15px; border-radius: 15px; max-width: 85%; font-size: 0.95rem;";
+    userMsg.style = "align-self: flex-end; background: var(--gold); color: black; padding: 10px 15px; border-radius: 15px; max-width: 85%; margin-bottom: 10px;";
     userMsg.innerText = userText;
     chatBox.appendChild(userMsg);
-
     input.value = ""; 
     chatBox.scrollTop = chatBox.scrollHeight;
 
-    // 2. Add "Thinking" indicator
-    const loadingMsg = document.createElement('div');
-    loadingMsg.id = "ai-loading";
-    loadingMsg.style = "align-self: flex-start; background: rgba(255,255,255,0.05); padding: 8px 15px; border-radius: 15px; color: #aaa; font-size: 0.8rem;";
-    loadingMsg.innerText = "Typing...";
-    chatBox.appendChild(loadingMsg);
-
-    // 3. System context for AI
-    const promptContext = `System: You are a soulful, poetic, and slightly witty AI assistant for Kamakshi. Her boyfriend [Your Name] built this for her. Use 'Radhe Radhe' and 'Kamakshuu'. You know they love Vrindavan and panipuri. Be supportive and romantic.
-    User said: ${userText}`;
-
     try {
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+        // THE FIX: // Use v1beta and gemini-1.5-flash together for the best results
+const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-001:generateContent?key=${GEMINI_API_KEY}`;
+
+
+
+
+
+        const response = await fetch(url, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                contents: [{ parts: [{ text: promptContext }] }]
+                contents: [{
+                    parts: [{ text: `You are a poetic AI assistant for Kamakshi. Her boyfriend Tejas built this. Be sweet and use Radhe Radhe. User: ${userText}` }]
+                }]
             })
         });
 
         const data = await response.json();
-        
-        // Remove loading indicator
-        const loader = document.getElementById('ai-loading');
-        if (loader) loader.remove();
-
         if (data.error) throw new Error(data.error.message);
 
         const aiText = data.candidates[0].content.parts[0].text;
 
-        // 4. Show AI Response
         const aiMsg = document.createElement('div');
-        aiMsg.style = "align-self: flex-start; background: rgba(255,255,255,0.1); padding: 10px 15px; border-radius: 15px; border-left: 3px solid var(--gold); color: white; max-width: 85%; font-size: 0.95rem;";
+        aiMsg.style = "align-self: flex-start; background: rgba(255,255,255,0.1); padding: 10px 15px; border-radius: 15px; border-left: 3px solid var(--gold); color: white; max-width: 85%; margin-bottom: 10px;";
         aiMsg.innerText = aiText;
         chatBox.appendChild(aiMsg);
 
     } catch (error) {
-        if (document.getElementById('ai-loading')) document.getElementById('ai-loading').remove();
         const errMsg = document.createElement('div');
-        errMsg.style = "align-self: center; color: #ff6b6b; font-size: 0.8rem; margin: 5px;";
-        errMsg.innerText = "Connection lost. Please check your API key.";
+        errMsg.style = "color: #ff6b6b; font-size: 0.75rem; text-align: center; margin: 5px;";
+        errMsg.innerText = "Error: " + error.message; 
         chatBox.appendChild(errMsg);
-        console.error("AI Error:", error);
     }
-
     chatBox.scrollTop = chatBox.scrollHeight;
 }
+
 
 
 
