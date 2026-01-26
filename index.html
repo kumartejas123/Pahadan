@@ -273,6 +273,88 @@ button:not(.check-btn):hover {
     text-shadow: 0 0 10px rgba(243, 207, 122, 0.4);
     font-family: 'Playfair Display', serif;
 }
+/* Deep Space Theme */
+#observatory {
+    background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
+    overflow: hidden;
+    position: relative;
+}
+
+/* Moving Nebula Effect */
+.nebula {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0; left: 0;
+    background: 
+        radial-gradient(circle at 20% 30%, rgba(100, 50, 255, 0.15), transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(255, 100, 150, 0.1), transparent 40%);
+    filter: blur(50px);
+    z-index: 0;
+    animation: nebulaMove 20s infinite alternate;
+}
+
+@keyframes nebulaMove {
+    from { transform: scale(1); }
+    to { transform: scale(1.2) translate(5%, 5%); }
+}
+
+/* Aries Constellation Styling */
+.constellation-map {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    margin: 20px 0;
+    background: url('https://www.transparenttextures.com/patterns/stardust.png');
+}
+
+.star-point {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 0 10px white;
+    animation: twinkle var(--d) infinite;
+}
+
+/* Connecting Lines for Aries */
+.constellation-line {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.1);
+    height: 1px;
+    transform-origin: left;
+}
+
+/* Mountain Silhouette at Bottom */
+.mountain-range {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 180px;
+    background: linear-gradient(to top, #050505 40%, transparent);
+    clip-path: polygon(
+        0% 100%, 10% 80%, 20% 40%, 35% 75%, 
+        50% 30%, 65% 70%, 80% 45%, 90% 85%, 100% 100%
+    );
+    z-index: 1;
+    filter: drop-shadow(0 -5px 15px rgba(0,0,0,0.8));
+}
+
+/* Added a soft "glow" behind the peaks */
+.peak-glow {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 200px;
+    background: radial-gradient(circle at center bottom, rgba(162, 155, 254, 0.15), transparent 70%);
+    pointer-events: none;
+}
+
+
 
 </style>
 </head>
@@ -311,16 +393,21 @@ button:not(.check-btn):hover {
     </p>
 
     <div class="buttons">
-        <button onclick="go('story')">Our Story</button>
-        <button onclick="go('temple')">Visit Mandir ✨</button>
-        <button onclick="go('gallery')">Gallery 📸</button>
-        <button onclick="go('bucket')">Bucket List 📝</button>
-        <button onclick="go('support')">When I Fell Short</button>
-<button onclick="go('krishna-ai')" style="border: 1px solid var(--gold); color: var(--gold);">Krishna Vaani ✨</button>
+<div class="buttons">
+    <button onclick="go('story')">Our Story</button>
+    <button onclick="go('temple')">Visit Mandir ✨</button>
+    <button onclick="go('gallery')">Gallery 📸</button>
+    
+    <button onclick="go('observatory')">The Observatory 🔭</button>
+    
+    <button onclick="go('bucket')">Bucket List 📝</button>
+    <button onclick="go('support')">When I Fell Short</button>
+    <button onclick="go('krishna-ai')" style="border: 1px solid var(--gold); color: var(--gold);">Krishna Vaani ✨</button>
+    <button onclick="go('countdown')">Special Dates ⏳</button>
+    <button onclick="go('chat')">Our Private Chat 💬</button>
+</div>
 
-        <button onclick="go('countdown')">Special Dates ⏳</button>
-        <button onclick="go('chat')">Our Private Chat 💬</button>
-
+     
     </div>
 </section>
 
@@ -372,6 +459,48 @@ button:not(.check-btn):hover {
         <button onclick="go('gallery')">Visit Gallery</button>
     </div>
 </section>
+
+
+<section id="observatory">
+    <div class="nebula"></div>
+    
+    <div style="position: relative; z-index: 2;">
+        <h2 class="temple-title" style="color: #fff !important; text-shadow: 0 0 15px var(--accent);">Kamakshi's Sky 🔭</h2>
+        <p style="text-align: center; color: var(--accent);">"From the mountains to the stars, you are my favorite view."</p>
+
+        <div class="constellation-map" id="aries-map">
+            <div class="star-point" style="top: 20%; left: 40%; --d: 2s;"></div>
+            <div class="star-point" style="top: 35%; left: 60%; --d: 3s;"></div>
+            <div class="star-point" style="top: 60%; left: 75%; --d: 2.5s;"></div>
+            <div class="star-point" style="top: 80%; left: 85%; --d: 4s;"></div>
+            
+            <div class="constellation-line" style="top: 21%; left: 41%; width: 150px; transform: rotate(25deg);"></div>
+            <div class="constellation-line" style="top: 36%; left: 61%; width: 120px; transform: rotate(50deg);"></div>
+            
+            <p style="position: absolute; bottom: 10px; left: 20px; font-size: 0.7rem; letter-spacing: 2px; opacity: 0.6;">CONSTELLATION: ARIES (APRIL 10)</p>
+        </div>
+
+        <div class="bucket-container" style="background: rgba(0,0,0,0.5); padding: 20px; border-radius: 20px; border: 1px solid rgba(162, 155, 254, 0.3);">
+            <p style="font-size: 1rem; line-height: 1.6;">
+                <span style="color: var(--gold);">Location:</span> High Altitudes (Your Favorite Place) <br>
+                <span style="color: var(--gold);">Focus:</span> The North Star (Polaris) <br><br>
+                Just like North Star, you are the constant in my sky. No matter where I wander, I look up and know where home is. 
+               Because you're my home, my north star!
+            </p>
+  
+    
+</div>
+
+
+        <div class="buttons" style="text-align: center; margin-top: 40px;">
+            <button onclick="go('home')">↩ Descend to Earth</button>
+            <button onclick="startMeteorShower()" style="border: 1px solid var(--gold); color: var(--gold);">Make a Wish 🌠</button>
+        </div>
+    </div>
+
+    <div class="mountain-range"></div>
+</section>
+
 
 <section id="vrindavan-gallery">
     <h2 class="temple-title">Vrindavan🦚</h2>
@@ -845,6 +974,56 @@ function askKrishna(mood) {
     }, 400);
 }
 
+function startMeteorShower() {
+    const section = document.getElementById('observatory');
+    
+    for (let i = 0; i < 3; i++) {
+        setTimeout(() => {
+            const meteor = document.createElement('div');
+            // Random start position from the top half
+            const startX = Math.random() * 80 + 20; // 20% to 100% of width
+            
+            meteor.style.cssText = `
+                position: absolute;
+                width: 2px;
+                height: 2px;
+                background: #fff;
+                box-shadow: 0 0 10px 2px #fff, 0 0 20px var(--accent);
+                top: -10px;
+                left: ${startX}%;
+                z-index: 5;
+                border-radius: 50%;
+                opacity: 0;
+            `;
+            
+            // The tail/streak
+            const trail = document.createElement('div');
+            trail.style.cssText = `
+                position: absolute;
+                width: 150px;
+                height: 1px;
+                background: linear-gradient(to left, rgba(255,255,255,0.8), transparent);
+                transform: rotate(-45deg); /* Angle of fall */
+                transform-origin: left;
+                top: 0;
+                left: 0;
+            `;
+            
+            meteor.appendChild(trail);
+            section.appendChild(meteor);
+            
+            // Animation for the "fall"
+            meteor.animate([
+                { transform: 'translate(0, 0)', opacity: 1 },
+                { transform: 'translate(-400px, 400px)', opacity: 0 } // Moves down and left
+            ], {
+                duration: 800 + Math.random() * 400,
+                easing: 'ease-out'
+            }).onfinish = () => meteor.remove();
+            
+        }, i * 500); // Staggered start times
+    }
+}
 
 </script>
 <script type="module">
