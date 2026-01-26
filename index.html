@@ -407,6 +407,46 @@ button:not(.check-btn):hover {
     }
 }
 
+.telemetry-box {
+    background: rgba(0, 10, 30, 0.7);
+    border: 1px solid #64d2ff;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 400px;
+    margin: 20px auto;
+    font-family: 'Courier New', Courier, monospace;
+    box-shadow: 0 0 20px rgba(100, 210, 255, 0.2);
+}
+
+.metric {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+    font-size: 0.9rem;
+}
+
+.value-glow {
+    color: #64d2ff;
+    text-shadow: 0 0 10px #64d2ff;
+    font-weight: bold;
+}
+
+.status-light {
+    width: 10px;
+    height: 10px;
+    background: #00ff00;
+    border-radius: 50%;
+    float: right;
+    box-shadow: 0 0 10px #00ff00;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink { 
+    0%, 100% { opacity: 1; } 
+    50% { opacity: 0.3; } 
+}
+
+
 
 
 </style>
@@ -516,7 +556,32 @@ button:not(.check-btn):hover {
 
 <section id="observatory">
     <div class="nebula"></div>
+
+    <div class="telemetry-box">
+    <div class="status-light"></div>
+    <h3>INTERSTELLAR SIGNAL STATUS</h3>
+    <hr style="border: 0.5px solid rgba(100, 210, 255, 0.3);">
     
+    <div class="metric">
+        <span>Signal Origin:</span>
+        <span class="value">17 Aug 2025</span>
+    </div>
+    
+    <div class="metric">
+        <span>Current Velocity:</span>
+        <span class="value">299,792 km/s (c)</span>
+    </div>
+
+    <div class="metric">
+        <span>Distance Traveled:</span>
+        <span id="light-distance" class="value-glow">0 KM</span>
+    </div>
+
+    <p id="cosmic-location" style="font-size: 0.8rem; color: var(--gold); margin-top: 15px; font-style: italic;">
+        Calculating current position in deep space...
+    </p>
+</div>
+
     <div style="position: relative; z-index: 2;">
         <h2 class="temple-title" style="color: #fff !important; text-shadow: 0 0 15px var(--accent);">Kamakshi's Sky 🔭</h2>
         <p style="text-align: center; color: var(--accent);">"From the mountains to the stars, you are my favorite view."</p>
@@ -1058,6 +1123,39 @@ function startMeteorShower() {
         }, i * (200 + Math.random() * 300)); // Staggered arrival
     }
 }
+// --- LIGHT-YEAR TICKER LOGIC ---
+function updateInterstellarSignal() {
+    const startTimestamp = new Date('August 17, 2025 00:00:00').getTime();
+    const now = new Date().getTime();
+    
+    // Seconds elapsed since the anniversary
+    const secondsPassed = (now - startTimestamp) / 1000;
+    
+    // Speed of light in km/s (scientific constant c)
+    const speedOfLight = 299792.458;
+    const distanceKm = secondsPassed * speedOfLight;
+
+    const display = document.getElementById('light-distance');
+    if (display) {
+        display.innerText = Math.floor(distanceKm).toLocaleString() + " KM";
+    }
+
+    // Space Location Logic
+    const locDisplay = document.getElementById('cosmic-location');
+    if (locDisplay) {
+        let location = "Signal Status: Moving through deep space...";
+        if (distanceKm > 384400) location = "Signal has passed the Moon 🌙";
+        if (distanceKm > 225000000) location = "Signal has passed the orbit of Mars 🔴";
+        if (distanceKm > 1500000000) location = "Signal has passed Saturn's Rings 🪐";
+        if (distanceKm > 19000000000) location = "Signal has reached Interstellar Space 🚀";
+        
+        locDisplay.innerText = location;
+    }
+}
+
+// Start the ticker as soon as the page loads
+setInterval(updateInterstellarSignal, 100);
+
 
 </script>
 <script type="module">
