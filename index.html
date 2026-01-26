@@ -354,6 +354,59 @@ button:not(.check-btn):hover {
     pointer-events: none;
 }
 
+.shooting-star {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    height: 2px;
+    /* The tail of the star */
+    background: linear-gradient(-45deg, rgba(95, 145, 255, 1), rgba(0, 0, 255, 0));
+    border-radius: 999px;
+    filter: drop-shadow(0 0 6px rgba(105, 155, 255, 1));
+    animation: tail 3000ms ease-in-out infinite, shooting 3000ms ease-in-out infinite;
+    z-index: 100;
+}
+
+/* The container that handles the movement */
+.shooting-star {
+    position: absolute;
+    width: 120px; /* The length of the streak */
+    height: 2px;
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 100%);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 999;
+}
+
+/* The glowing nucleus of the star */
+.shooting-star::after {
+    content: '';
+    position: absolute;
+    right: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 4px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 15px 2px #fff, 0 0 25px 5px var(--accent);
+}
+
+@keyframes meteor-streak {
+    0% {
+        transform: translate(0, 0) rotate(var(--angle)) scaleX(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+        transform: translate(100px, 100px) rotate(var(--angle)) scaleX(1.5);
+    }
+    100% {
+        transform: translate(600px, 600px) rotate(var(--angle)) scaleX(0.5);
+        opacity: 0;
+    }
+}
+
 
 
 </style>
@@ -977,51 +1030,32 @@ function askKrishna(mood) {
 function startMeteorShower() {
     const section = document.getElementById('observatory');
     
-    for (let i = 0; i < 3; i++) {
+    // Fire a burst of 5-8 stars
+    for (let i = 0; i < 7; i++) {
         setTimeout(() => {
-            const meteor = document.createElement('div');
-            // Random start position from the top half
-            const startX = Math.random() * 80 + 20; // 20% to 100% of width
+            const star = document.createElement('div');
+            star.className = 'shooting-star';
             
-            meteor.style.cssText = `
-                position: absolute;
-                width: 2px;
-                height: 2px;
-                background: #fff;
-                box-shadow: 0 0 10px 2px #fff, 0 0 20px var(--accent);
-                top: -10px;
-                left: ${startX}%;
-                z-index: 5;
-                border-radius: 50%;
-                opacity: 0;
-            `;
+            // Randomize starting position (Top and Right areas)
+            const startX = Math.random() * 100;
+            const startY = Math.random() * 40; // Only from the top half
             
-            // The tail/streak
-            const trail = document.createElement('div');
-            trail.style.cssText = `
-                position: absolute;
-                width: 150px;
-                height: 1px;
-                background: linear-gradient(to left, rgba(255,255,255,0.8), transparent);
-                transform: rotate(-45deg); /* Angle of fall */
-                transform-origin: left;
-                top: 0;
-                left: 0;
-            `;
+            // Randomize angle (between 30 and 60 degrees for natural fall)
+            const angle = 35 + Math.random() * 20;
             
-            meteor.appendChild(trail);
-            section.appendChild(meteor);
+            star.style.left = startX + '%';
+            star.style.top = startY + '%';
+            star.style.setProperty('--angle', `${angle}deg`);
             
-            // Animation for the "fall"
-            meteor.animate([
-                { transform: 'translate(0, 0)', opacity: 1 },
-                { transform: 'translate(-400px, 400px)', opacity: 0 } // Moves down and left
-            ], {
-                duration: 800 + Math.random() * 400,
-                easing: 'ease-out'
-            }).onfinish = () => meteor.remove();
+            // Randomize speed: some are fast (0.4s), some are medium (0.8s)
+            const duration = 0.4 + Math.random() * 0.5;
+            star.style.animation = `meteor-streak ${duration}s ease-out forwards`;
             
-        }, i * 500); // Staggered start times
+            section.appendChild(star);
+            
+            // Cleanup
+            setTimeout(() => star.remove(), duration * 1000);
+        }, i * (200 + Math.random() * 300)); // Staggered arrival
     }
 }
 
