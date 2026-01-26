@@ -558,66 +558,44 @@ button:not(.check-btn):hover {
     <div class="nebula"></div>
 
     <div class="telemetry-box">
-    <div class="status-light"></div>
-    <h3>INTERSTELLAR SIGNAL STATUS</h3>
-    <hr style="border: 0.5px solid rgba(100, 210, 255, 0.3);">
-    
-    <div class="metric">
-        <span>Signal Origin:</span>
-        <span class="value">17 Aug 2025</span>
+        <div class="status-light"></div>
+        <h3>INTERSTELLAR SIGNAL STATUS</h3>
+        <hr style="border: 0.5px solid rgba(100, 210, 255, 0.3);">
+        
+        <div class="metric"><span>Signal Origin:</span><span class="value">17 Aug 2025</span></div>
+        <div class="metric"><span>Current Velocity:</span><span class="value">299,792 km/s (c)</span></div>
+        <div class="metric"><span>Distance Traveled:</span><span id="light-distance" class="value-glow">0 KM</span></div>
+        <p id="cosmic-location" style="font-size: 0.8rem; color: var(--gold); margin-top: 15px; font-style: italic;">
+            Calculating current position...
+        </p>
     </div>
-    
-    <div class="metric">
-        <span>Current Velocity:</span>
-        <span class="value">299,792 km/s (c)</span>
-    </div>
-
-    <div class="metric">
-        <span>Distance Traveled:</span>
-        <span id="light-distance" class="value-glow">0 KM</span>
-    </div>
-
-    <p id="cosmic-location" style="font-size: 0.8rem; color: var(--gold); margin-top: 15px; font-style: italic;">
-        Calculating current position in deep space...
-    </p>
-</div>
 
     <div style="position: relative; z-index: 2;">
         <h2 class="temple-title" style="color: #fff !important; text-shadow: 0 0 15px var(--accent);">Kamakshi's Sky 🔭</h2>
-        <p style="text-align: center; color: var(--accent);">"From the mountains to the stars, you are my favorite view."</p>
-
-        <div class="constellation-map" id="aries-map">
-            <div class="star-point" style="top: 20%; left: 40%; --d: 2s;"></div>
-            <div class="star-point" style="top: 35%; left: 60%; --d: 3s;"></div>
-            <div class="star-point" style="top: 60%; left: 75%; --d: 2.5s;"></div>
-            <div class="star-point" style="top: 80%; left: 85%; --d: 4s;"></div>
-            
-            <div class="constellation-line" style="top: 21%; left: 41%; width: 150px; transform: rotate(25deg);"></div>
-            <div class="constellation-line" style="top: 36%; left: 61%; width: 120px; transform: rotate(50deg);"></div>
-            
-            <p style="position: absolute; bottom: 10px; left: 20px; font-size: 0.7rem; letter-spacing: 2px; opacity: 0.6;">CONSTELLATION: ARIES (APRIL 10)</p>
-        </div>
+        
+        <div id="aladin-lite-div" style="width: 90%; height: 400px; margin: 20px auto; border: 2px solid var(--accent); border-radius: 20px; overflow: hidden; box-shadow: 0 0 25px rgba(255, 214, 231, 0.2);"></div>
+        
+        <p style="text-align: center; color: var(--accent); font-size: 0.9rem; margin-top: -10px;">
+            <i>Drag to explore the cosmos. Scroll to zoom into the stars.</i>
+        </p>
 
         <div class="bucket-container" style="background: rgba(0,0,0,0.5); padding: 20px; border-radius: 20px; border: 1px solid rgba(162, 155, 254, 0.3);">
             <p style="font-size: 1rem; line-height: 1.6;">
                 <span style="color: var(--gold);">Location:</span> High Altitudes (Your Favorite Place) <br>
-                <span style="color: var(--gold);">Focus:</span> The North Star (Polaris) <br><br>
-                Just like North Star, you are the constant in my sky. No matter where I wander, I look up and know where home is. 
-               Because you're my home, my north star!
+                Just like the North Star, you are the constant in my sky. Because you're my home!
             </p>
-  
-    
-</div>
-
+        </div>
 
         <div class="buttons" style="text-align: center; margin-top: 40px;">
             <button onclick="go('home')">↩ Descend to Earth</button>
             <button onclick="startMeteorShower()" style="border: 1px solid var(--gold); color: var(--gold);">Make a Wish 🌠</button>
+<button onclick="flyToNorthStar()" style="border: 1px solid #64d2ff; color: #64d2ff;">Find My North Star 🌟</button>
+
         </div>
     </div>
-
     <div class="mountain-range"></div>
 </section>
+
 
 
 <section id="vrindavan-gallery">
@@ -1157,6 +1135,7 @@ function updateInterstellarSignal() {
 setInterval(updateInterstellarSignal, 100);
 
 
+
 </script>
 <script type="module">
     // 1. Import the necessary Firebase functions
@@ -1267,6 +1246,37 @@ setInterval(updateInterstellarSignal, 100);
         // Auto-scroll to the bottom for new messages
         list.scrollTop = list.scrollHeight;
     });
+
+</script>
+
+<script type="text/javascript" src="https://aladin.cds.unistra.fr/AladinLite/api/v3/latest/aladin.js" charset="utf-8"></script>
+
+<script type="text/javascript">
+    let aladin;
+    A.init.then(() => {
+        aladin = A.aladin('#aladin-lite-div', {
+            survey: "P/DSS2/color", // Beautiful high-res color survey
+            fov: 15,                // Field of view (how zoomed in)
+            target: "Aries",        // Centers on the Aries constellation
+            showReticle: false,     // Keeps it clean
+            showLayersControl: false,
+            showFullscreenControl: true
+        });
+    });
+function flyToNorthStar() {
+    if (aladin) {
+        // This smoothly pans and zooms the telescope to the North Star (Polaris)
+        aladin.gotoObject('Polaris', {
+            delay: 2000, // 2 second flight time
+            fov: 2       // Zoom in close
+        });
+        
+        // Optional: Update the telemetry text for her
+        document.getElementById('cosmic-location').innerText = "Target Locked: Polaris (The North Star) - Your Constant.";
+        document.getElementById('cosmic-location').style.color = "#ffd6e7";
+    }
+}
+
 
 </script>
 
