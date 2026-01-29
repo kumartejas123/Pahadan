@@ -764,16 +764,25 @@ button:not(.check-btn):hover {
 </section>
 
 <script>
+let aladinLoaded = false; // To track if we've already loaded the stars
+
 function go(id) {
     document.querySelectorAll("section").forEach(sec => {
         sec.classList.remove("active");
     });
+    
     const targetSection = document.getElementById(id);
     if (targetSection) {
         targetSection.classList.add("active");
         window.scrollTo(0, 0);
+
+        // NEW: Only load the heavy Observatory if she actually goes there
+        if (id === 'observatory' && !aladinLoaded) {
+            loadObservatory();
+        }
     }
 }
+
 
 function toggleBucket(btn) {
     const parent = btn.parentElement;
@@ -1053,6 +1062,30 @@ function startMeteorShower() {
         }, i * (200 + Math.random() * 300)); // Staggered arrival
     }
 }
+function loadObservatory() {
+    const div = document.getElementById('aladin-lite-div');
+    div.innerHTML = "<p style='text-align:center; padding-top:180px; color:var(--accent);'>Unfolding the cosmos for you... 🔭</p>";
+
+    // Dynamically load the heavy Aladin script
+    const script = document.createElement('script');
+    script.src = "https://aladin.cds.unistra.fr/AladinLite/api/v3/latest/aladin.js";
+    script.charset = "utf-8";
+    
+    script.onload = () => {
+        A.init.then(() => {
+            aladin = A.aladin('#aladin-lite-div', {
+                survey: "P/DSS2/color",
+                fov: 15,
+                target: "Aries",
+                showReticle: false,
+                showLayersControl: false
+            });
+            aladinLoaded = true; // Set to true so it doesn't reload if she leaves and comes back
+        });
+    };
+    
+    document.head.appendChild(script);
+}
 
 
 
@@ -1169,7 +1202,7 @@ function startMeteorShower() {
 
 </script>
 
-<script type="text/javascript" src="https://aladin.cds.unistra.fr/AladinLite/api/v3/latest/aladin.js" charset="utf-8"></script>
+
 
 <script type="text/javascript">
     let aladin;
